@@ -28,8 +28,9 @@ RUN apt-get update && apt-get install -y \
 	vim \
 	curl \
 	wget \
-	ruby \
-	nodejs
+	ruby-full \
+	nodejs \
+	build-essential
 
 RUN locale-gen en_US.UTF-8
 # We unfortunately cannot use update-locale because docker will not use the env variables
@@ -38,6 +39,8 @@ ENV LC_ALL=en_US.UTF-8
 
 RUN adduser --gecos '' --disabled-password coder && \
 	echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+RUN gem install fastlane terminal-table
 
 USER coder
 # We create first instead of just using WORKDIR as when WORKDIR creates, the user is root.
